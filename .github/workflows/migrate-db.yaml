@@ -1,0 +1,59 @@
+name: Migrate DB
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        description: Environment where the artifact will be deployed.
+        type: string
+        required: true
+
+concurrency:
+  group: ${{ github.workflow }}-cd
+  cancel-in-progress: true
+
+jobs:
+  migrate:
+    runs-on: [self-hosted, linux]
+    environment: ${{ inputs.environment }}-cd
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+
+      - name: Install Docker
+        run: |
+          apt-get update
+          apt-get install -y docker.io
+          # systemctl start docker
+          # ystemctl enable docker
+
+      - name: Verify Docker Installation
+        run: docker --version
+
+      - name: Run Docker Command
+        run: |
+          docker run hello-world
+
+      # - name: Azure Login
+      #   uses: azure/login@v2 # v2.0.0
+      #   env:
+      #     ARM_USE_OIDC: true
+      #     ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+      #     ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+      #     ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+      #   with:
+      #     client-id: ${{ env.ARM_CLIENT_ID }}
+      #     tenant-id: ${{ env.ARM_TENANT_ID }}
+      #     subscription-id: ${{ env.ARM_SUBSCRIPTION_ID }}
+
+      # - name: Migrate DB Schema
+      #   run: |-
+      #     set -e
+      #     ./scripts/run_flyway_on_azure.sh migrate db PROD-IO schema/migrations "${{ env.SCHEMA_NAME }}" \
+      #       && echo "Migration successful" \
+      #       || { echo "Migration failed"; exit 1; }
+      #   shell: bash
+      #   env:
+      #     # THIS IS THE PRODUCTION SCHEMA NAME, SO PLEASE DON'T CHANGE IT
+      #     SCHEMA_NAME: DeveloperPortalServiceData
