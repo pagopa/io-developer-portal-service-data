@@ -1,5 +1,5 @@
 import { ApiManagementClient } from "@azure/arm-apimanagement";
-import { AzureAuthorityHosts, ClientSecretCredential } from "@azure/identity";
+import { DefaultAzureCredential } from "@azure/identity";
 
 export interface IServicePrincipalCreds {
   readonly clientId: string;
@@ -13,17 +13,6 @@ export interface IAzureApimConfig {
   readonly apim: string;
 }
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
-export function getApiClient(
-  servicePrincipalCreds: IServicePrincipalCreds,
-  subscriptionId: string
-): ApiManagementClient {
-  const credential = new ClientSecretCredential(
-    servicePrincipalCreds.tenantId,
-    servicePrincipalCreds.clientId,
-    servicePrincipalCreds.secret,
-    {
-      authorityHost: AzureAuthorityHosts.AzurePublicCloud
-    }
-  );
-  return new ApiManagementClient(credential, subscriptionId);
+export function getApiClient(subscriptionId: string): ApiManagementClient {
+  return new ApiManagementClient(new DefaultAzureCredential(), subscriptionId);
 }
