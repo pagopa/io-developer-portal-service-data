@@ -1,0 +1,15 @@
+name: Migrate DB - PROD
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - fix-artifact-generation
+
+jobs:
+  migrate:
+    uses: ./.github/workflows/migrate-db.yaml
+    name: Migrate DB
+    secrets: inherit
+    with:
+      environment: 'prod'
