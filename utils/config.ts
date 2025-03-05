@@ -39,12 +39,9 @@ export const IDecodableConfigPostgreSQL = t.interface({
 //   needed in order to query API Subscription Keys
 export type IDecodableConfigAPIM = t.TypeOf<typeof IDecodableConfigAPIM>;
 export const IDecodableConfigAPIM = t.interface({
-  APIM_CLIENT_ID: NonEmptyString,
   APIM_RESOURCE_GROUP: NonEmptyString,
-  APIM_SECRET: NonEmptyString,
   APIM_SERVICE_NAME: NonEmptyString,
-  APIM_SUBSCRIPTION_ID: NonEmptyString,
-  APIM_TENANT_ID: NonEmptyString
+  APIM_SUBSCRIPTION_ID: NonEmptyString
 });
 
 // Environment configuration to connect to Azure Storage Account
