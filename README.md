@@ -1,3 +1,7 @@
+# ⚠️ Progetto Archiviato ⚠️
+
+**Questo progetto non è più sviluppato né mantenuto.**
+
 # IO Functions template
 
 Template per l'utilizzo di Azure Functions (e Durable Functions) all'interno del
