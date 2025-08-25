@@ -13,4 +13,5 @@ jobs:
       resource_group_name: 'io-p-selfcare-be-rg'
       app_name: 'io-p-devportalsrvdata-fn'
       use_staging_slot: true
-      use_private_agent: false
+      use_private_agent: true
+      health_check_path: '/api/v1/info'
